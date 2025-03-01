@@ -1,0 +1,20 @@
+-- ACTIVITY 4: Advanced Bulk Transactions and Concurrency Control
+-- Step 5: Processing Bulk Transactions Safely
+START TRANSACTION;
+UPDATE Accounts SET Balance = Balance - 100 WHERE AccountID BETWEEN 1 AND 2000;
+UPDATE Accounts SET Balance = Balance + 100 WHERE AccountID BETWEEN 2001 AND 4000;
+SAVEPOINT bulk_transaction;
+
+SELECT * FROM Accounts WHERE AccountID BETWEEN 1 AND 5;
+
+ROLLBACK TO bulk_transaction;
+COMMIT;
+
+SET SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;
+START TRANSACTION;
+UPDATE Accounts SET Balance = Balance - 500 WHERE AccountID = 3;
+UPDATE Accounts SET Balance = Balance + 500 WHERE AccountID = 4;
+COMMIT;
+
+
+SELECT @@TRANSACTION_ISOLATION;
