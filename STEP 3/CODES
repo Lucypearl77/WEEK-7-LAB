@@ -1,0 +1,13 @@
+-- ACTIVITY 2: Managing User Roles and Access Control on Large Datasets
+-- Step 3: Creating Users and Assigning Privileges
+CREATE USER IF NOT EXISTS 'bank_clerk'@'localhost' IDENTIFIED BY'securepassword';
+
+GRANT SELECT, UPDATE ON BankingSystem.Accounts TO 'bank_clerk'@'localhost';
+
+CREATE USER IF NOT EXISTS 'auditor'@'localhost' IDENTIFIED BY'readonlypass';
+GRANT SELECT ON BankingSystem.* TO 'auditor'@'localhost';
+
+SHOW GRANTS FOR 'bank_clerk'@'localhost';
+SHOW GRANTS FOR 'auditor'@'localhost';
+
+REVOKE UPDATE ON BankingSystem.Accounts FROM 'bank_clerk'@'localhost';
