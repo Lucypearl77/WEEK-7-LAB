@@ -1,0 +1,15 @@
+- ACTIVITY 1 : Implementing Transactions on Interconnected Tables 
+-- Step 2: Handling Complex Transactions
+START TRANSACTION;
+UPDATE Accounts SET Balance = Balance - 1000 WHERE AccountID = 1;
+UPDATE Accounts SET Balance = Balance + 1000 WHERE AccountID = 2;
+INSERT INTO Transactions (AccountID, TransactionType, Amount)
+VALUES (1, 'Transfer', 1000), (2, 'Transfer', 1000);
+COMMIT;
+
+START TRANSACTION;
+UPDATE Loans SET Status = 'Paid' WHERE LoanID = 5;
+INSERT INTO Payments (LoanID, AmountPaid) VALUES (5, 5000);
+COMMIT;
+ 
+  
